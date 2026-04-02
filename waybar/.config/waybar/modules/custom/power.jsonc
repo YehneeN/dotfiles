@@ -1,0 +1,7 @@
+{
+	"custom/power": {
+		"format": "󰤄",
+		"on-click": "wlogout --protocol layer-shell",
+		"tooltip-format": "Power Menu",
+	}
+}
