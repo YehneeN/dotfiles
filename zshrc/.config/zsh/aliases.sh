@@ -3,6 +3,7 @@ alias ezrc='vim ~/.dotfiles/zshrc/.zshrc'
 alias ezalias='vim ~/.dotfiles/zshrc/.config/zsh/aliases.sh'
 alias ezfunction='vim ~/.dotfiles/zshrc/.config/zsh/functions.sh'
 alias ezbind='vim ~/.dotfiles/hypr/.config/hypr/sFiles/keybinds.conf'
+alias ezhypr='vim ~/.dotfiles/hypr/.config/hypr/hyprland.conf'
 
 # Change directory aliases
 alias cd..='cd ..'
