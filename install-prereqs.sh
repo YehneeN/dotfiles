@@ -52,6 +52,8 @@ function install_arch() {
         "polkit"
         "pipewire"
         "wireplumber"
+	"nwg-look"
+	"kvantum"
     )
 
     echo_info "Installation des paquets..."
