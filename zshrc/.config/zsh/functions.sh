@@ -37,13 +37,6 @@ ftext() {
 	grep -iIHrn --color=always "$1" . | less -r
 }
 
-# Mise à jour Système
-sys_update () {
-	sudo nala update && sudo nala dist-upgrade -y
-	flatpak update
-	brew update && brew upgrade
-}
-
 cd() {
 	if [ -n "$1" ]; then
 		builtin cd "$1" && clear && eza -a --icons --group-directories-first
@@ -148,86 +141,6 @@ gitnewfolder ()
 	git remote add origin git@github.com:YehneeN/$(basename "$PWD").git
 }
 
-# Start Networking Toolbox
-Net_Toolbox() {
-    cd /home/rfontaine/Documents/Scripts/Dockers/Networking-Toolbox || exit
-    clear
-
-    case "$1" in
-        Start)
-            echo -e "${YELLOW_B}Démarrage de la webApp Networking toolbox\n"\
-                    "Pour clôturer l'accès --> Net_Toolbox stop.\n\n"\
-                    "${BLUE} ---- http://localhost:3000 ---- \n\n"
-
-            sudo docker compose up -d
-            while ! nc -z localhost 3000; do
-                sleep 1
-            done
-#            xdg-open "http://localhost:3000"
-            ;;
-        Stop)
-            echo -e "${YELLOW_B}Arrêt de la webApp Networking toolbox\n"
-            sudo docker compose down
-            ;;
-        *)
-            echo -e "${RED}Usage : Net_Toolbox Start|Stop"
-            ;;
-    esac
-}
-
-convertX() {
-	cd /home/rfontaine/Documents/Scripts/Dockers/ConvertX || exit
-	clear
-
-	case "$1" in
-		Start)
-			echo -e "${YELLOW_B}Démarrage de la webApp ConvertX\n"\
-				"Pour clôturer l'accès --> convertX Stop.\n\n"\
-				"${BLUE} ---- http://localhost:3000 ----\n\n"
-
-			sudo docker compose up -d
-			while ! nc -z localhost 3000; do
-				sleep 1
-			done
-			;;
-		Stop)
-			echo -e "${YELLOW_B}Arrêt de la webApp ConvertX\n"
-			sudo docker compose down
-			;;
-		*)
-			echo -e "${RED} Usage: convertX Start|Stop"
-			;;
-	esac
-}
-
-
-# Start Networking Toolbox
-IT_Toolbox() {
-    cd /home/rfontaine/Documents/Scripts/Dockers/IT-Tools || exit
-    clear
-
-    case "$1" in
-        Start)
-            echo -e "${YELLOW_B}Démarrage de la webApp IT Toolbox\n"\
-                    "Pour clôturer l'accès --> IT_Toolbox stop.\n\n"\
-                    "${BLUE} ---- http://localhost:3580 ---- \n\n"
-
-            sudo docker compose -f docker-compose.yaml up -d
-            while ! nc -z localhost 3580; do
-                sleep 1
-            done
-#            xdg-open "http://localhost:3000"
-            ;;
-        Stop)
-            echo -e "${YELLOW_B}Arrêt de la webApp IT Toolbox\n"
-            sudo docker compose -f docker-compose.yaml down
-            ;;
-        *)
-            echo -e "${RED}Usage : IT_Toolbox Start|Stop"
-            ;;
-    esac
-}
-
 # Start IT_Service sync
 IT_sharepoint() {
 	case "$1" in
@@ -275,68 +188,3 @@ OneDrive_RF() {
 	esac
 }
 
-
-# Start Excalidraw
-Excalidraw() {
-    case "$1" in
-        Start)
-            echo -e "${YELLOW_B}Démarrage de la webApp Excalidraw\n"\
-                    "Pour clôturer l'accès --> Excalidraw stop.\n\n"\
-                    "${BLUE} ---- http://localhost:5000 ---- \n\n"
-
-            docker run --rm -dit --name excalidraw -p 5000:80 excalidraw/excalidraw
-            while ! nc -z localhost 5000; do
-                sleep 1
-            done
-#            xdg-open "http://localhost:5000"
-            ;;
-        Stop)
-            echo -e "${YELLOW_B}Arrêt de la webApp Excalidraw\n"
-            docker stop excalidraw > /dev/null
-            ;;
-        *)
-            echo -e "${RED}Usage : Excalidraw Start|Stop"
-            ;;
-    esac
-}
-
-# Start LDFM
-ldfm() {
-    case "$1" in
-        Start)
-            cd ~/Documents/Scripts/Dockers/ldfm
-            echo -e "${YELLOW_B}Démarrage des containers LDFM \n"\
-                    "Pour clôturer l'accès --> ldfm Stop.\n\n"\
-                    "${BLUE} ---- https://localhost ---- \n\n"
-            sh ./sh/start.sh
-
-            ;;
-        Stop)
-            cd ~/Documents/Scripts/Dockers/ldfm
-            echo -e "${YELLOW_B}Arrêt des containers LDFM\n"
-            sh ./sh/down.sh
-            ;;
-        *)
-            echo -e "${RED}Usage : ldfm Start|Stop"
-            ;;
-    esac
-}
-
-# Start Winapps
-#vmWin() {
-#	case "$1" in
-#		Start)
-#			echo -e "${YELLOW_B}Démarrage de WinApps\n"\
-#				"Pour arrêter le container --> vmWin Stop. \n\n"
-#
-#			docker compose --file /mnt/HDD2/WinApps/compose.yaml start
-#			;;
-#		Stop)
-#			echo -e "${YELLOW_B}Arrêt de WinApps\n"
-#			docker compose --file /mnt/HDD2/WinApps/compose.yaml stop
-#			;;
-#		*)
-#			echo -e "${RED}Usage: vmWin Start|Stop"
-#			;;
-#	esac
-#}
