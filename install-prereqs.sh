@@ -7,11 +7,11 @@ GREEN='\033[0;32m'
 BLUE='\033[0;34m'
 NC='\033[0m'
 
-echo_info() { echo -e "${BLUE}[INFO]${NC} $1"; }
-echo_success() { echo -e "${GREEN}[OK]${NC} $1"; }
-echo_error() { echo -e "${RED}[ERROR]${NC} $1"; }
+function echo_info() { echo -e "${BLUE}[INFO]${NC} $1"; }
+function echo_success() { echo -e "${GREEN}[OK]${NC} $1"; }
+function echo_error() { echo -e "${RED}[ERROR]${NC} $1"; }
 
-install_arch() {
+function install_arch() {
     local packages=(
         "hyprland"
         "waybar"
