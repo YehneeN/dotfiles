@@ -1,0 +1,80 @@
+#!/usr/bin/env bash
+
+set -e
+
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+BLUE='\033[0;34m'
+NC='\033[0m'
+
+echo_info() { echo -e "${BLUE}[INFO]${NC} $1"; }
+echo_success() { echo -e "${GREEN}[OK]${NC} $1"; }
+echo_error() { echo -e "${RED}[ERROR]${NC} $1"; }
+
+install_arch() {
+    local packages=(
+        "hyprland"
+        "waybar"
+        "rofi"
+        "swaync"
+        "wlogout"
+        "hyprlock"
+        "hyprpaper"
+        "kitty"
+        "alacritty"
+        "thunar"
+        "fastfetch"
+        "neovim"
+        "btop"
+        "zsh"
+        "stow"
+        "eza"
+        "bat"
+        "fzf"
+        "zoxide"
+"grim"
+"trash-cli"
+"wl-clipboard"
+        "brightnessctl"
+        "networkmanager"
+        "polkit"
+        "pipewire"
+        "wireplumber"
+    )
+
+    echo_info "Installation des paquets..."
+    echo
+
+    local to_install=()
+    for pkg in "${packages[@]}"; do
+        if ! pacman -Q "$pkg" &> /dev/null; then
+            to_install+=("$pkg")
+        else
+            echo -e "  ${GREEN}✓${NC} $pkg (déjà installé)"
+        fi
+    done
+
+    if [ ${#to_install[@]} -eq 0 ]; then
+        echo_success "Tous les paquets sont déjà installés !"
+        return 0
+    fi
+
+    echo
+    echo_info "Paquets à installer : ${#to_install[@]}"
+    for pkg in "${to_install[@]}"; do
+        echo "  - $pkg"
+    done
+    echo
+
+    read -p "Voulez-vous continuer ? [O/n] " -n 1 -r
+    echo
+    if [[ ! $REPLY =~ ^[Oo]$ ]] && [[ ! -z $REPLY ]]; then
+        echo_info "Installation annulée."
+        return 1
+    fi
+
+    sudo pacman -S --needed "${to_install[@]}"
+    echo_success "Installation terminée !"
+}
+
+install_arch

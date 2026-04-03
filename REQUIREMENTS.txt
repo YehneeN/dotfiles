@@ -25,6 +25,7 @@
 ## Outils CLI essentiels
 
 - zsh
+- stow
 - eza
 - bat
 - fzf
@@ -33,6 +34,7 @@
 - docker
 - flatpak
 - grim
+- trash-cli
 - wl-clipboard
 - brightnessctl
 - networkmanager
