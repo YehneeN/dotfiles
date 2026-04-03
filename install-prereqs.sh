@@ -32,9 +32,9 @@ install_arch() {
         "bat"
         "fzf"
         "zoxide"
-"grim"
-"trash-cli"
-"wl-clipboard"
+        "grim"
+        "trash-cli"
+        "wl-clipboard"
         "brightnessctl"
         "networkmanager"
         "polkit"
@@ -55,7 +55,7 @@ install_arch() {
     done
 
     if [ ${#to_install[@]} -eq 0 ]; then
-        echo_success "Tous les paquets sont déjà installés !"
+        echo_success "Tous les paquets prérequis sont déjà installés !"
         return 0
     fi
 
