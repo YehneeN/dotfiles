@@ -15,7 +15,7 @@
 		// "max-length":
 		// "align":
 		// "justify":
-		"on-click": pkill rofi || true && rofi -show drun -theme $HOME/.config/rofi/config.rasi
+//		"on-click": pkill rofi || true && rofi -show drun -theme $HOME/.config/rofi/config.rasi
 		// "on-click-middle":
 		// "on-click-right":
 		// "on-update":
