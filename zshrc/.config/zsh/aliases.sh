@@ -77,7 +77,7 @@ alias powershell="pwsh"
 # Personal Alias's
 alias sht="sudo shutdown -P now"
 alias rbt="sudo shutdown -r now"
-alias ff="fastfetch"
+alias ff="fastfetch -l arch"
 alias zi="__zoxide_zi"
 alias reload="source ~/.zshrc"
 alias iptables="sudo iptables"
