@@ -1,11 +1,19 @@
 #!/usr/bin/env bash
-
 set -e
 
+# VARIABLES
+## Colors
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 BLUE='\033[0;34m'
 NC='\033[0m'
+
+## Paths
+CONFIG_DIR="${CONFIG_DIR:-$HOME/.dotfiles}"
+CONFIG_SRC="${CONFIG_SRC:-https://github.com/YehneeN/dotfiles.git}"
+
+## Verifs.
+SYSTEM_TYPE=$(uname -s)
 
 function echo_info() { echo -e "${BLUE}[INFO]${NC} $1"; }
 function echo_success() { echo -e "${GREEN}[OK]${NC} $1"; }
@@ -52,8 +60,8 @@ function install_arch() {
         "polkit"
         "pipewire"
         "wireplumber"
-	"nwg-look"
-	"kvantum"
+        "nwg-look"
+        "kvantum"
     )
 
     echo_info "Installation des paquets..."
@@ -90,5 +98,11 @@ function install_arch() {
     sudo pacman -S --needed "${to_install[@]}"
     echo_success "Installation terminée !"
 }
+
+echo_info "Script d'installation - YehneeN\n"\
+"   Ce script installera les fichiers:\n"\
+"   Depuis la source ${CONFIG_SRC}\n"\
+"   Dans le dossier ${CONFIG_DIR}\n"\
+"   >>> Bien lire les différents Readme avant de faire quoi que ce soit.\n"
 
 install_arch
