@@ -36,10 +36,16 @@ function install_arch() {
         "qt6-declarative"
         "qt6-imageformats"
         "qt6-multimedia"
+        "qt6-multimedia-ffmpeg"
         "qt6-shadertools"
         "qt6-svg"
         "qt6-translations"
         "qt6-virtualkeyboard"
+        "qt6-wayland"
+        "qt5-graphicaleffects"
+        "qt5-quickcontrols2"
+        "qt5-svg"
+        "qt5-multimedia"
         "kitty"
         "alacritty"
         "thunar"
@@ -62,6 +68,10 @@ function install_arch() {
         "wireplumber"
         "nwg-look"
         "kvantum"
+        "gst-plugins-good"
+        "gst-plugins-bad"
+        "gst-plugins-ugly"
+        "gst-plugins-base"
     )
 
     echo_info "Installation des paquets...\n"
@@ -96,6 +106,15 @@ function install_arch() {
     echo_success "Installation terminée !"
 }
 
+function config_sddm() {
+    echo_info "Configuration SDDM en cours..."
+    sudo cp -r $HOME/.dotfiles/sddm/enfield /usr/share/sddm/themes/
+    sudo cp $HOME/.dotfiles/sddm/enfield/fonts/Orbitron-VariableFont_wght.ttf /usr/share/fonts/TTF/
+    sudo fc-cache -fv
+    sudo mv /etc/sddm.conf /etc/sddm.conf.old
+    sudo cp $HOME/.dotfiles/sddm/sddm.conf /etc/sddm.conf
+}
+
 echo_info "Script d'installation - YehneeN\n"\
 "   Ce script installera les fichiers:\n"\
 "   Depuis la source ${CONFIG_SRC}\n"\
@@ -103,3 +122,4 @@ echo_info "Script d'installation - YehneeN\n"\
 "   >>> Bien lire les différents Readme avant de faire quoi que ce soit.\n"
 
 install_arch
+config_sddm
