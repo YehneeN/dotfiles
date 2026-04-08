@@ -64,8 +64,7 @@ function install_arch() {
         "kvantum"
     )
 
-    echo_info "Installation des paquets..."
-    echo
+    echo_info "Installation des paquets...\n"
 
     local to_install=()
     for pkg in "${packages[@]}"; do
@@ -77,16 +76,14 @@ function install_arch() {
     done
 
     if [ ${#to_install[@]} -eq 0 ]; then
-        echo_success "Tous les paquets prérequis sont déjà installés !"
+        echo_success "Tous les paquets prérequis sont déjà installés !\n"
         return 0
     fi
 
-    echo
     echo_info "Paquets à installer : ${#to_install[@]}"
     for pkg in "${to_install[@]}"; do
-        echo "  - $pkg"
+        echo "  - $pkg\n"
     done
-    echo
 
     read -p "Voulez-vous continuer ? [O/n] " -n 1 -r
     echo
