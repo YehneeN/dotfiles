@@ -20,6 +20,10 @@ SDDM_FONT_DIR="/usr/share/fonts/TTF"
 SDDM_CONF="/etc/sddm.conf"
 SDDM_CONF_BACKUP="/etc/sddm.conf.old"
 SDDM_CONF_SOURCE="$HOME/.dotfiles/sddm/sddm.conf"
+KVANTUM_THEME="Layan"
+GTK_THEME="Layan-Dark"
+GIT_NAME="YehneeN"
+GIT_EMAIL="rfontaine@etik.com"
 
 function echo_info() { echo -e "${BLUE}[INFO]${NC} $1"; }
 function echo_success() { echo -e "${GREEN}[OK]${NC} $1"; }
@@ -112,6 +116,127 @@ function install_arch() {
 
     sudo pacman -S --needed "${to_install[@]}"
     echo_success "Installation terminée !"
+}
+
+function clone_dotfiles() {
+    if [ -d "$CONFIG_DIR" ]; then
+        echo_info "Dotfiles déjà présents: $CONFIG_DIR"
+        echo -n "Voulez-vous les mettre à jour ? [O/n] "
+        read -n 1 -r REPLY
+        echo
+        if [[ $REPLY =~ ^[Oo]$ ]] || [[ -z $REPLY ]]; then
+            cd "$CONFIG_DIR"
+            git pull origin main || git pull origin master
+            echo_success "Dotfiles mis à jour"
+        fi
+        return 0
+    fi
+
+    echo_info "Clonage des dotfiles depuis $CONFIG_SRC\n"
+
+    echo -n "Cloner le repository ? [O/n] "
+    read -n 1 -r REPLY
+    echo
+    if [[ ! $REPLY =~ ^[Oo]$ ]] && [[ ! -z $REPLY ]]; then
+        echo_info "Clonage annulé."
+        return 1
+    fi
+
+    if ! command -v git &> /dev/null; then
+        echo_error "Git n'est pas installé"
+        return 1
+    fi
+
+    git clone "$CONFIG_SRC" "$CONFIG_DIR"
+    echo_success "Dotfiles clonés dans: $CONFIG_DIR"
+}
+
+function config_git() {
+    echo_info "Configuration Git\n"
+
+    local current_name=$(git config --global user.name 2>/dev/null)
+    local current_email=$(git config --global user.email 2>/dev/null)
+
+    if [ -n "$current_name" ] && [ -n "$current_email" ]; then
+        echo_info "Git déjà configuré:"
+        echo "  Name: $current_name"
+        echo "  Email: $current_email"
+        echo -n "Voulez-vous modifier la configuration ? [n/O] "
+        read -n 1 -r REPLY
+        echo
+        if [[ ! $REPLY =~ ^[Nn]$ ]] && [[ ! -z $REPLY ]]; then
+            return 0
+        fi
+    fi
+
+    echo -n "Configurer git avec Name=$GIT_NAME, Email=$GIT_EMAIL ? [O/n] "
+    read -n 1 -r REPLY
+    echo
+    if [[ $REPLY =~ ^[Oo]$ ]] || [[ -z $REPLY ]]; then
+        git config --global user.name "$GIT_NAME"
+        git config --global user.email "$GIT_EMAIL"
+        echo_success "Git configuré"
+    fi
+}
+
+function config_themes() {
+    echo_info "Configuration des thèmes...\n"
+
+    local kvantum_dir="$HOME/.config/Kvantum"
+    local gtk_conf="$HOME/.config/gtk-3.0/settings.ini"
+
+    if [ ! -d "$kvantum_dir" ]; then
+        mkdir -p "$kvantum_dir"
+    fi
+
+    echo -n "Télécharger et installer le thème Kvantum '$KVANTUM_THEME' ? [O/n] "
+    read -n 1 -r REPLY
+    echo
+    if [[ $REPLY =~ ^[Oo]$ ]] || [[ -z $REPLY ]]; then
+        if [ -d "/tmp/Layan" ]; then
+            rm -rf /tmp/Layan
+        fi
+        echo_info "Téléchargement du thème Layan..."
+        git clone --depth 1 https://github.com/vinceliuice/Layan-kvantum.git /tmp/Layan
+        sudo cp -r /tmp/Layan/* "$kvantum_dir/"
+        rm -rf /tmp/Layan
+        echo_success "Thème Kvantum '$KVANTUM_THEME' installé"
+
+        echo "[Settings]" > "$kvantum_dir/$KVANTUM_THEME/$KVANTUM_THEME.conf"
+        echo "theme=$KVANTUM_THEME" >> "$kvantum_dir/$KVANTUM_THEME/$KVANTUM_THEME.conf"
+    fi
+
+    echo
+    echo -n "Installer le thème GTK '$GTK_THEME' ? [O/n] "
+    read -n 1 -r REPLY
+    echo
+    if [[ $REPLY =~ ^[Oo]$ ]] || [[ -z $REPLY ]]; then
+        if [ -d "/tmp/Layan-dark" ]; then
+            rm -rf /tmp/Layan-dark
+        fi
+        echo_info "Téléchargement du thème Layan-Dark..."
+        git clone --depth 1 https://github.com/vinceliuice/Layan-dark.git /tmp/Layan-dark
+        mkdir -p "$HOME/.themes"
+        cp -r /tmp/Layan-dark/* "$HOME/.themes/"
+        rm -rf /tmp/Layan-dark
+        echo_success "Thème GTK '$GTK_THEME' installé"
+
+        if [ -f "$gtk_conf" ]; then
+            if grep -q "gtk-theme-name" "$gtk_conf"; then
+                sed -i "s/gtk-theme-name=.*/gtk-theme-name=$GTK_THEME/" "$gtk_conf"
+            else
+                echo "gtk-theme-name=$GTK_THEME" >> "$gtk_conf"
+            fi
+        else
+            mkdir -p "$HOME/.config/gtk-3.0"
+            echo "[Settings]" > "$gtk_conf"
+            echo "gtk-theme-name=$GTK_THEME" >> "$gtk_conf"
+        fi
+        echo_success "Thème GTK '$GTK_THEME' appliqué"
+    fi
+
+    echo
+    echo_info "Redémarrez la session pour appliquer les thèmes."
 }
 
 function config_sddm() {
@@ -455,11 +580,36 @@ echo_info "Script d'installation - YehneeN\n"\
 "   Depuis la source ${CONFIG_SRC}\n"\
 "   Dans le dossier ${CONFIG_DIR}\n"
 
+echo
+echo -n "Cloner/Mettre à jour les dotfiles ? [O/n] "
+read -n 1 -r REPLY
+echo
+if [[ $REPLY =~ ^[Oo]$ ]] || [[ -z $REPLY ]]; then
+    clone_dotfiles
+fi
+
+echo
+echo -n "Configurer Git ? [O/n] "
+read -n 1 -r REPLY
+echo
+if [[ $REPLY =~ ^[Oo]$ ]] || [[ -z $REPLY ]]; then
+    config_git
+fi
+
+echo
 echo -n "Installer les prérequis (paquets Arch) ? [O/n] "
 read -n 1 -r REPLY
 echo
 if [[ $REPLY =~ ^[Oo]$ ]] || [[ -z $REPLY ]]; then
     install_arch
+fi
+
+echo
+echo -n "Configurer les thèmes (Kvantum + GTK) ? [O/n] "
+read -n 1 -r REPLY
+echo
+if [[ $REPLY =~ ^[Oo]$ ]] || [[ -z $REPLY ]]; then
+    config_themes
 fi
 
 echo
