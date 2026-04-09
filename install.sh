@@ -160,6 +160,40 @@ function config_sddm() {
     echo_success "Configuration SDDM terminée !"
 }
 
+function config_zshShell() {
+    if ! command -v zsh &> /dev/null; then
+        echo_error "Zsh n'est pas installé"
+        return 1
+    fi
+
+    local current_shell=$(basename "$SHELL")
+
+    if [ "$current_shell" = "zsh" ]; then
+        echo_success "Zsh est déjà le shell par défaut"
+        return 0
+    fi
+
+    echo_info "Shell actuel: $current_shell"
+    echo_info "Shell cible: zsh"
+    echo
+
+    echo -n "Changer le shell par défaut pour zsh ? [O/n] "
+    read -n 1 -r REPLY
+    echo
+    if [[ ! $REPLY =~ ^[Oo]$ ]] && [[ ! -z $REPLY ]]; then
+        echo_info "Shell non modifié."
+        return 0
+    fi
+
+    if chsh -s "$(which zsh)"; then
+        echo_success "Shell changé pour zsh"
+        echo_info "Déconnectez-vous et reconnectez-vous pour appliquer."
+    else
+        echo_error "Échec du changement de shell"
+        return 1
+    fi
+}
+
 function stowThat() {
     local packages=(
         "alacritty"
@@ -442,6 +476,14 @@ read -n 1 -r REPLY
 echo
 if [[ $REPLY =~ ^[Oo]$ ]] || [[ -z $REPLY ]]; then
     stowThat
+fi
+
+echo
+echo -n "Configurer Zsh comme shell par défaut ? [O/n] "
+read -n 1 -r REPLY
+echo
+if [[ $REPLY =~ ^[Oo]$ ]] || [[ -z $REPLY ]]; then
+    config_zshShell
 fi
 
 echo
