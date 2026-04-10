@@ -1,7 +1,7 @@
 {
 	"custom/power": {
 		"format": "󰤄",
-		"on-click": "wlogout --protocol layer-shell",
+		"on-click": "wlogout -C $HOME/.config/wlogout/style-1.css --protocol layer-shell",
 		"tooltip-format": "Power Menu",
 	}
 }

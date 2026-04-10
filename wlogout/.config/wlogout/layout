@@ -1,6 +1,6 @@
 {
     "label" : "lock",
-    "action" : "hyprlock",
+    "action" : "quickshell -c lockscreen",
     "text" : "Lock",
     "keybind" : "l"
 }

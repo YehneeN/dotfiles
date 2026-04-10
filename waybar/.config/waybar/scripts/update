@@ -1,20 +1,9 @@
-#!/usr/bin/env bash
-#
-# Update packages from the official and unofficial user repositories
-# Passing "module" returns the update status in JSON format
-#
-# Requires pacman-contrib (checkupdates)
-#
-# Author:  Jesse Mirabel <sejjymvm@gmail.com>
-# Date:    August 16, 2025
-# License: MIT
-
 FG_GREEN="\e[32m"
 FG_BLUE="\e[34m"
 FG_RESET="\e[39m"
 
 TIMEOUT=10
-HELPERS=( aura paru pikaur trizen yay )
+HELPERS=( paru )
 
 printf() {
 	command printf "$@" >&2
@@ -61,18 +50,18 @@ check_updates() {
 }
 
 update_packages() {
-	printf "%bUpdating pacman packages...%b\n" "$FG_BLUE" "$FG_RESET"
+	printf "%bMise a jour des packages pacman...%b\n" "$FG_BLUE" "$FG_RESET"
 	sudo pacman -Syu
 
 	if [[ -n $HELPER ]]; then
-		printf "\n%bUpdating AUR packages...%b\n" "$FG_BLUE" "$FG_RESET"
+		printf "\n%bMise a jour des packages AUR...%b\n" "$FG_BLUE" "$FG_RESET"
 		"$HELPER" -Syu
 	fi
 
-	notify-send "Update Complete" -i "package-install"
+	notify-send "Update OK" -i "package-install"
 
-	printf "\n%bUpdate Complete!%b\n" "$FG_GREEN" "$FG_RESET"
-	read -rsn 1 -p "Press any key to exit..."
+	printf "\n%bMise a jour : OK!%b\n" "$FG_GREEN" "$FG_RESET"
+	read -rsn 1 -p "Appuyer sur une touche pour sortir..."
 }
 
 display_module() {
@@ -112,7 +101,7 @@ main() {
 			display_module
 			;;
 		*)
-			printf "%bChecking for updates...%b\n" "$FG_BLUE" "$FG_RESET"
+			printf "%bRecherche des mises a jour...%b\n" "$FG_BLUE" "$FG_RESET"
 			check_updates
 			update_packages
 			pkill -RTMIN+1 waybar # Refresh the module
