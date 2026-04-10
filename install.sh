@@ -36,6 +36,8 @@ function install_arch() {
         "waybar"
         "rofi"
         "swaync"
+        "upower"
+        "pywal-git"
         "wlogout"
         "hyprlock"
         "hyprpaper"
