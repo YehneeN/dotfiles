@@ -81,6 +81,8 @@ unalias zi
 
 export BAT_THEME="Catppuccin Frappe"
 
+(cat ~/.cache/wal/sequences &)
+
 # Shell integrations
 #eval "$(starship init zsh)"
 eval "$(fzf --zsh)"

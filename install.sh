@@ -297,6 +297,7 @@ function config_zshShell() {
 
     if [ "$current_shell" = "zsh" ]; then
         echo_success "Zsh est déjà le shell par défaut"
+        wal -i $HOME/.config/wallpapers
         return 0
     fi
 
@@ -314,6 +315,7 @@ function config_zshShell() {
 
     if chsh -s "$(which zsh)"; then
         echo_success "Shell changé pour zsh"
+        wal -i $HOME/.config/wallpapers
         echo_info "Déconnectez-vous et reconnectez-vous pour appliquer."
     else
         echo_error "Échec du changement de shell"
