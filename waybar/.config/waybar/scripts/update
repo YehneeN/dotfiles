@@ -68,13 +68,13 @@ display_module() {
 	local icon tooltip
 
 	if $FAILED; then
-		icon='󰒑'
+		icon='✘'
 		tooltip="<b>Failed to fetch updates</b>\nRight-click to retry"
 	elif ((UPDATES + AUR_UPDATES == 0)); then
-		icon='󰸟'
+		icon='✔'
 		tooltip="No updates available"
 	else
-		icon='󰄠'
+		icon='↻'
 		tooltip="<b>Pacman</b>: $UPDATES"
 
 		if [[ -n $HELPER ]]; then
