@@ -338,6 +338,7 @@ function stowThat() {
         "waybar"
         "wlogout"
         "zshrc"
+        "vesktop"
     )
 
     declare -A stow_targets=(
