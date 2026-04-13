@@ -1,0 +1,8 @@
+{
+  "custom/rofi": {
+    "format": "{icon} Applications",
+    "format-icons": [""],
+    "tooltip-format": "Applications",
+    "on-click": "rofi -show drun -theme $HOME/.config/rofi/config.rasi",
+  },
+}

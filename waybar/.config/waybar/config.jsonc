@@ -1,86 +1,42 @@
 {
-	"include": [
-		"~/.config/waybar/modules/*.jsonc",
-		"~/.config/waybar/modules/custom/*.jsonc",
-		"~/.config/waybar/modules/hyprland/*.jsonc"
+  "layer": "top",
+  "position": "top",
+  "mod": "dock",
+  "exclusive": true,
+  "passthrough": false,
+  "gtk-layer-shell": true,
 
-		// Modules that are not included by default:
-		// "~/.config/waybar/modules/extras/*.jsonc"
-	],
+  "include": [
+    "~/.config/waybar/modules/*.jsonc",
+    "~/.config/waybar/modules/custom/*.jsonc",
+    "~/.config/waybar/modules/extra/*.jsonc",
+    "~/.config/waybar/modules/hyprland/*.jsonc",
+  ],
 
-	/*------------
-	    Layout
-	------------*/
+  "modules-left": ["clock", "network", "bluetooth", "hyprland/window"],
+  "modules-center": [
+    "custom/rofi",
+    "hyprland/workspaces",
+    "group/exit",
+    "custom/updates",
+  ],
+  "modules-right": ["group/hardware", "group/audio", "tray"],
 
-	"modules-left": [
-		"custom/user",
-		"custom/left_div#1",
-		"hyprland/workspaces",
-		"custom/right_div#1",
-		"hyprland/window"
-	],
-	"modules-center": [
-		"custom/left_div#2",
-		"custom/left_div#3",
-		"memory",
-		"custom/left_div#4",
-		"cpu",
-		"custom/left_inv#1",
-		"custom/left_div#5",
-		"custom/distro",
-		"custom/right_div#2",
-		"custom/right_inv#1",
-		"idle_inhibitor",
-		"clock#time",
-		"custom/right_div#3",
-		"clock#date",
-		"custom/right_div#4",
-		"network",
-		"bluetooth",
-		"custom/update",
-		"custom/right_div#5"
-	],
-	"modules-right": [
-		"mpris",
-		"custom/left_div#6",
-		"group/pulseaudio",
-		"custom/left_div#7",
-		"backlight",
-		"custom/left_div#8",
-		"battery",
-		"custom/left_inv#2",
-		"custom/power"
-	],
+  // Group Hardware
+  "group/hardware": {
+    "orientation": "horizontal",
+    "modules": ["temperature", "battery", "power-profiles-daemon", "backlight"],
+  },
 
-	/*-------------
-	    Options
-	-------------*/
+  // Group IO Audio
+  "group/audio": {
+    "orientation": "horizontal",
+    "modules": ["pulseaudio", "pulseaudio#microphone"],
+  },
 
-	// "expand-center":
-	// "expand-left":
-	// "expand-right":
-	"layer": "top",
-	// "output":
-	// "position":
-	"height": 0,
-	"width": 0,
-	"margin": 0,
-	// "margin-top":
-	// "margin-left":
-	// "margin-bottom":
-	// "margin-right":
-	// "no-center":
-	"spacing": 0,
-	// "name":
-	"mode": "dock",
-	// "start_hidden":
-	// "modifier-reset":
-	// "exclusive":
-	// "fixed-center":
-	// "passthrough":
-	// "ipc":
-	// "id":
-	"reload_style_on_change": true
-	// "on-sigusr1":
-	// "on-sigusr2":
+  // Group Wlogout \ Lock QS
+  "group/exit": {
+    "orientation": "horizontal",
+    "modules": ["custom/power_btn", "custom/lock_screen"],
+  },
 }

@@ -1,0 +1,9 @@
+{
+  "custom/lock_screen": {
+    "format": "{icon}",
+    "format-icons": [""],
+    "on-click": "quickshell -c lockscreen",
+    "tooltip-format": "Lock",
+    "tooltip": true,
+  },
+}

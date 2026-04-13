@@ -1,19 +1,14 @@
 {
-	"hyprland/window": {
-		"format": "{}",
-		"rewrite": {
-			"": "Desktop",
-			"kitty": "Terminal",
-			"zsh": "Terminal",
-			"~": "Terminal"
-		},
-		// "separate-outputs":
-		// "icon":
-		// "icon-size":
-		// "min-length":
-		// "max-length":
-		// "tooltip":
-		"swap-icon-label": false
-		// "expand":
-	}
+  "hyprland/window": {
+    "format": "{}",
+    "rewrite": {
+      "(.*) - Thunar": " $1",
+      "Steam": " Steam",
+      "Kitty": " $1",
+      "class<spotify>": " Spotify",
+      "class<zenity>": "  Lenovo Vantage",
+    },
+    "icon": true,
+    "separate-output": true,
+  },
 }
