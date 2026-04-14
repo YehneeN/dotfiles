@@ -347,6 +347,7 @@ function stowThat() {
         "wlogout"
         "zshrc"
         "vesktop"
+        "yazi"
     )
 
     declare -A stow_targets=(
