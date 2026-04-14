@@ -86,6 +86,14 @@ function install_arch() {
         "gst-plugins-ugly"
         "gst-plugins-base"
         "sddm"
+        "yazi"
+        "ffmpeg"
+        "7zip"
+        "poppler"
+        "fd"
+        "ripgrep"
+        "resvg"
+        "imagemagick"
     )
 
     echo_info "Installation des paquets...\n"
