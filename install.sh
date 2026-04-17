@@ -94,6 +94,7 @@ function install_arch() {
         "ripgrep"
         "resvg"
         "imagemagick"
+	"keepassxc"
     )
 
     echo_info "Installation des paquets...\n"

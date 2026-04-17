@@ -171,19 +171,19 @@ IT_sharepoint() {
 }
 
 # Start OneDrive sync
-OneDrive_RF() {
+OneDrive() {
 	case "$1" in
 		mount)
 			echo -e "${YELLOW_B}Montage OneDrive\n"
-			rclone --vfs-cache-mode writes mount OneDrive: /mnt/SSD2/OneDrive-RF &
-			echo -e "${YELLOW_B}Démontage = OneDrive_RF unmount\n"
+			rclone --vfs-cache-mode writes mount OneDrive-RF: $HOME/OneDrive &
+			echo -e "${YELLOW_B}Démontage = OneDrive unmount\n"
 			;;
 		unmount)
 			echo -e "${YELLOW_B}Démontage OneDrive\n"
-			fusermount -u /mnt/SSD2/OneDrive-RF
+			fusermount -u $HOME/OneDrive
 			;;
 		*)
-			echo -e "${RED}Usage : OneDrive_RF mount|unmount"
+			echo -e "${RED}Usage : OneDrive mount|unmount"
 			;;
 	esac
 }
