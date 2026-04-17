@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=Splashtop Client for RMM
+Exec=/usr/local/bin/splashtop-rmm %u
+Type=Application
+Terminal=false
+MimeType=x-scheme-handler/st-rmm;
+Categories=Network;RemoteAccess;

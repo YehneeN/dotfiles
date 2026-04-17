@@ -1,0 +1,19 @@
+#!/bin/bash
+
+export WINEPREFIX=/opt/splashtop-wine
+export WINEDEBUG=-all
+
+RAW_URL="$1"
+
+# Extraction de l'ID RMM
+ID="${RAW_URL#st-rmm://}"
+
+CLIENT_OOBE="$WINEPREFIX/drive_c/Program Files (x86)/Splashtop/Splashtop Remote/Client for RMM/clientoobe.exe"
+
+if [[ ! -f "$CLIENT_OOBE" ]]; then
+  echo "clientoobe.exe introuvable"
+  exit 1
+fi
+
+#wine "$(winepath -w "$CLIENT_OOBE")" -a "$ID"
+wine "$CLIENT_OOBE" -a "$ID"

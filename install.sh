@@ -440,7 +440,8 @@ function install_extras() {
         ["1_1"]="firefox"
         ["1_2"]="brave-bin"
         ["1_3"]="opera-ffmpeg-codecs"
-        ["1_4"]="opera"
+	["1_4"]="chromium"
+        ["1_5"]="opera"
 
         ["2_1"]="vlc"
         ["2_2"]="kodi"
