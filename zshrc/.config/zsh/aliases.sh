@@ -85,6 +85,7 @@ alias dl="z ~/Téléchargements && ls"
 alias passgen="openssl rand -base64 16"
 alias meteo="curl wttr.in"
 alias monip="curl -4 monip.org"
+alias scctl="$HOME/.dotfiles/hypr/.config/hypr/scripts/monitors.sh"
 
 # System Monitoring
 alias meminfo='free -m -l -t' # Show free and used memory

@@ -8,7 +8,7 @@
       "class<spotify>": " Spotify",
       "class<zenity>": "  Lenovo Vantage",
     },
-    "icon": true,
+    "icon": false,
     "separate-output": true,
   },
 }
