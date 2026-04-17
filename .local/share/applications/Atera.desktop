@@ -1,0 +1,20 @@
+[Desktop Entry]
+Version=1.0
+Name=ATERA
+Comment=RMM Client App
+Exec=chromium --app="https://app.atera.com" --class=ATERA --name=ATERA
+Terminal=false
+X-MultipleArgs=false
+Type=Application
+Icon=/home/yehneen/.local/share/ice/icons/ATERA.png
+Categories=GTK;WebApps;
+MimeType=text/html;text/xml;application/xhtml_xml;
+StartupWMClass=WebApp-ATERA7051
+StartupNotify=true
+X-WebApp-Browser=Chromium
+X-WebApp-URL=https://app.atera.com
+X-WebApp-CustomParameters=
+X-WebApp-Navbar=false
+X-WebApp-PrivateWindow=false
+X-WebApp-Isolated=false
+
