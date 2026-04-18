@@ -94,7 +94,14 @@ function install_arch() {
         "ripgrep"
         "resvg"
         "imagemagick"
-	"keepassxc"
+        "keepassxc"
+        "bluez"
+        "bluez-utils"
+        "bluetui"
+        "wine-staging"
+        "wine-mono"
+        "wine-gecko"
+        "winetricks"
     )
 
     echo_info "Installation des paquets...\n"
@@ -348,6 +355,7 @@ function stowThat() {
         "wlogout"
         "zshrc"
         "vesktop"
+        "local"
         "yazi"
     )
 
