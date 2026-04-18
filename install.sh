@@ -12,18 +12,56 @@ NC='\033[0m'
 ## Paths
 CONFIG_DIR="${CONFIG_DIR:-$HOME/.dotfiles}"
 CONFIG_SRC="${CONFIG_SRC:-https://github.com/YehneeN/dotfiles.git}"
-THEME="enfield"
-SDDM_THEME_DIR="/usr/share/sddm/themes"
-SDDM_THEME_SOURCE="$HOME/.dotfiles/sddm/enfield"
-SDDM_FONT_SOURCE="$HOME/.dotfiles/sddm/enfield/fonts/Orbitron-VariableFont_wght.ttf"
-SDDM_FONT_DIR="/usr/share/fonts/TTF"
-SDDM_CONF="/etc/sddm.conf"
-SDDM_CONF_BACKUP="/etc/sddm.conf.old"
-SDDM_CONF_SOURCE="$HOME/.dotfiles/sddm/sddm.conf"
 KVANTUM_THEME="Layan"
 GTK_THEME="Layan-Dark"
-GIT_NAME="YehneeN"
-GIT_EMAIL="rfontaine@etik.com"
+BACKUP_DIR="$HOME/Backup_Config"
+
+function backup_configs() {
+    if [ ! -d "$BACKUP_DIR" ]; then
+        mkdir -p "$BACKUP_DIR"
+    fi
+
+    local -A configs=(
+        ["$HOME/.config/hypr"]="hypr"
+        ["$HOME/.config/kitty"]="kitty"
+        ["$HOME/.config/alacritty"]="alacritty"
+        ["$HOME/.config/rofi"]="rofi"
+        ["$HOME/.config/waybar"]="waybar"
+        ["$HOME/.config/swaync"]="swaync"
+        ["$HOME/.config/wlogout"]="wlogout"
+        ["$HOME/.config/zsh"]="zsh"
+        ["$HOME/.zshrc"]="zshrc"
+        ["$HOME/.config/gtk-3.0"]="gtk-3.0"
+        ["$HOME/.config/Kvantum"]="kvantum"
+        ["$HOME/.local/share/icons"]="icons"
+        ["$HOME/.local/share/wallpapers"]="wallpapers"
+        ["$HOME/.config/quickshell"]="quickshell"
+        ["$HOME/.config/fastfetch"]="fastfetch"
+    )
+
+    local backed_up=0
+    local skipped=0
+
+    for path in "${!configs[@]}"; do
+        if [ -e "$path" ]; then
+            local name="${configs[$path]}"
+            local dest="$BACKUP_DIR/$name"
+            local count=1
+            while [ -d "$dest" ]; do
+                dest="$BACKUP_DIR/${name}_$count"
+                ((count++))
+            done
+
+            cp -r "$path" "$dest"
+            echo "$path -> $dest"
+            ((backed_up++))
+        else
+            ((skipped++))
+        fi
+    done
+
+    echo_info "Sauvegarde terminée: $backed_up fichiers backupés, $skipped ignorés"
+}
 
 function echo_info() { echo -e "${BLUE}[INFO]${NC} $1"; }
 function echo_success() { echo -e "${GREEN}[OK]${NC} $1"; }
@@ -187,14 +225,20 @@ function config_git() {
         fi
     fi
 
-    echo -n "Configurer git avec Name=$GIT_NAME, Email=$GIT_EMAIL ? [O/n] "
-    read -n 1 -r REPLY
+    echo -n "Nom d'utilisateur Git: "
+    read -r git_name
+    echo -n "Email Git: "
+    read -r git_email
     echo
-    if [[ $REPLY =~ ^[Oo]$ ]] || [[ -z $REPLY ]]; then
-        git config --global user.name "$GIT_NAME"
-        git config --global user.email "$GIT_EMAIL"
-        echo_success "Git configuré"
+
+    if [ -z "$git_name" ] || [ -z "$git_email" ]; then
+        echo_error "Nom et email requis"
+        return 1
     fi
+
+    git config --global user.name "$git_name"
+    git config --global user.email "$git_email"
+    echo_success "Git configuré: $git_name <$git_email>"
 }
 
 function config_themes() {
@@ -260,45 +304,50 @@ function config_themes() {
 function config_sddm() {
     echo_info "Configuration SDDM...\n"
 
-    if [ ! -d "$SDDM_THEME_SOURCE" ]; then
-        echo_error "Thème SDDM introuvable: $SDDM_THEME_SOURCE"
+    local sddm_theme_source="$CONFIG_DIR/sddm/enfield"
+    local sddm_font_source="$CONFIG_DIR/sddm/enfield/fonts/Orbitron-VariableFont_wght.ttf"
+    local sddm_conf_source="$CONFIG_DIR/sddm/sddm.conf"
+
+    if [ ! -d "$sddm_theme_source" ]; then
+        echo_error "Thème SDDM introuvable: $sddm_theme_source"
         return 1
     fi
-    echo_success "Thème source trouvé: $SDDM_THEME_SOURCE"
+    echo_success "Thème source trouvé: $sddm_theme_source"
 
-    if [ ! -f "$SDDM_FONT_SOURCE" ]; then
-        echo_error "Police SDDM introuvable: $SDDM_FONT_SOURCE"
+    if [ ! -f "$sddm_font_source" ]; then
+        echo_error "Police SDDM introuvable: $sddm_font_source"
         return 1
     fi
-    echo_success "Police source trouvée: $SDDM_FONT_SOURCE"
+    echo_success "Police source trouvée: $sddm_font_source"
 
-    if [ ! -f "$SDDM_CONF_SOURCE" ]; then
-        echo_error "Config SDDM introuvable: $SDDM_CONF_SOURCE"
+    if [ ! -f "$sddm_conf_source" ]; then
+        echo_error "Config SDDM introuvable: $sddm_conf_source"
         return 1
     fi
-    echo_success "Config source trouvée: $SDDM_CONF_SOURCE\n"
+    echo_success "Config source trouvée: $sddm_conf_source\n"
 
-    if [ -f "$SDDM_CONF" ]; then
+    local sddm_conf="/etc/sddm.conf"
+    if [ -f "$sddm_conf" ]; then
         echo_info "Sauvegarde de l'ancienne config..."
-        sudo mv "$SDDM_CONF" "$SDDM_CONF_BACKUP"
-        echo_success "Sauvegardée: $SDDM_CONF_BACKUP\n"
+        sudo mv "$sddm_conf" "$sddm_conf.old"
+        echo_success "Sauvegardée: /etc/sddm.conf.old\n"
     fi
 
     echo_info "Copie du thème..."
-    sudo cp -r "$SDDM_THEME_SOURCE" "$SDDM_THEME_DIR/"
-    echo_success "Thème copié vers: $SDDM_THEME_DIR/enfield"
+    sudo cp -r "$sddm_theme_source" "/usr/share/sddm/themes/"
+    echo_success "Thème copié vers: /usr/share/sddm/themes/enfield"
 
     echo_info "Copie de la police..."
-    sudo cp "$SDDM_FONT_SOURCE" "$SDDM_FONT_DIR/"
-    echo_success "Police copiée vers: $SDDM_FONT_DIR/"
+    sudo cp "$sddm_font_source" "/usr/share/fonts/TTF/"
+    echo_success "Police copiée vers: /usr/share/fonts/TTF/"
 
     echo_info "Rafraîchissement du cache des polices..."
     sudo fc-cache -fv
     echo_success "Cache actualisé\n"
 
     echo_info "Application de la configuration..."
-    sudo cp "$SDDM_CONF_SOURCE" "$SDDM_CONF"
-    echo_success "Config appliquée: $SDDM_CONF\n"
+    sudo cp "$sddm_conf_source" "$sddm_conf"
+    echo_success "Config appliquée: $sddm_conf\n"
 
     echo_success "Configuration SDDM terminée !"
 }
@@ -603,6 +652,14 @@ function install_extras() {
 echo_info "Script d'installation - YehneeN\n"\
 "   Depuis la source ${CONFIG_SRC}\n"\
 "   Dans le dossier ${CONFIG_DIR}\n"
+
+echo
+echo -n "Sauvegarder la configuration actuelle ? [O/n] "
+read -n 1 -r REPLY
+echo
+if [[ $REPLY =~ ^[Oo]$ ]] || [[ -z $REPLY ]]; then
+    backup_configs
+fi
 
 echo
 echo -n "Cloner/Mettre à jour les dotfiles ? [O/n] "
