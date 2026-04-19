@@ -476,179 +476,6 @@ function stowThat() {
     done
 }
 
-function install_extras() {
-    if ! command -v paru &> /dev/null; then
-        echo_warn "Paru n'est pas installé. Installation via pacman uniquement."
-        echo_info "Installez paru avec: sudo pacman -S paru"
-        sleep 2
-    fi
-
-    local -A categories=(
-        ["1"]="Navigateurs"
-        ["2"]="Multimédia"
-        ["3"]="Utilitaires"
-        ["4"]="Développement"
-        ["5"]="Graphisme"
-        ["6"]="Bureautique"
-        ["7"]="Gaming"
-    )
-
-    local -A packages=(
-        ["1_1"]="firefox"
-        ["1_2"]="brave-bin"
-        ["1_3"]="opera-ffmpeg-codecs"
-	["1_4"]="chromium"
-        ["1_5"]="opera"
-
-        ["2_1"]="vlc"
-        ["2_2"]="kodi"
-        ["2_3"]="spotify"
-
-        ["3_1"]="ncdu"
-
-        ["4_1"]="zed"
-        ["4_2"]="vscodium"
-
-        ["5_1"]="gimp"
-        ["5_2"]="krita"
-        ["5_3"]="inkscape"
-
-        ["6_1"]="onlyoffice-bin"
-        ["6_2"]="libreoffice-fresh"
-
-        ["7_1"]="steam"
-        ["7_2"]="lutris"
-        ["7_3"]="heroic-games-launcher"
-    )
-
-    local -A source
-    local -A status
-    local -A selected
-
-    for key in "${!packages[@]}"; do
-        status["$key"]="[ ]"
-    done
-
-    while true; do
-        clear
-        echo -e "${BLUE}================================${NC}"
-        echo -e "${BLUE}  Installation de logiciels${NC}"
-        echo -e "${BLUE}================================${NC}"
-        echo
-        echo -e "${YELLOW}Sélectionnez les logiciels à installer${NC}"
-        echo -e "Touche numérique pour toggle, Entrée pour valider, q pour quitter"
-        echo
-
-        local cat_prev=""
-        for key in $(printf '%s\n' "${!packages[@]}" | sort); do
-            local cat="${key%%_*}"
-            if [ "$cat" != "$cat_prev" ]; then
-                echo
-                echo -e "${GREEN}[ ${categories[$cat]} ]${NC}"
-                cat_prev="$cat"
-            fi
-            local pkg="${packages[$key]}"
-            local source_tag=""
-
-            if pacman -Q "$pkg" &> /dev/null; then
-                source["$key"]="installed"
-                source_tag=" ${GREEN}(pacman)${NC}"
-            elif paru -Si "$pkg" &> /dev/null; then
-                source["$key"]="aur"
-                source_tag=" ${YELLOW}(AUR)${NC}"
-            else
-                source["$key"]="missing"
-                source_tag=" ${RED}(indisponible)${NC}"
-            fi
-
-            echo "  $key. ${status[$key]} $pkg$source_tag"
-        done
-
-        echo
-        local count=0
-        for key in "${!selected[@]}"; do
-            ((count++))
-        done
-        echo -e "Sélectionnés: ${GREEN}$count${NC}"
-        echo
-
-        echo -e "1-9. Toggle  |  Entrée. Valider  |  q. Quitter"
-        echo -n "Choix: "
-
-        local key
-        read -n 1 -s key
-        echo
-
-        if [ -z "$key" ]; then
-            break
-        elif [ "$key" = "q" ] || [ "$key" = "Q" ]; then
-            return 0
-        elif [[ "$key" =~ ^[0-9]$ ]]; then
-            for prefix in "1_" "2_" "3_" "4_" "5_" "6_" "7_"; do
-                local full_key="${prefix}${key}"
-                if [ -n "${packages[$full_key]:-}" ] && [ "${source[$full_key]}" != "installed" ] && [ "${source[$full_key]}" != "missing" ]; then
-                    if [ "${status[$full_key]}" = "[ ]" ]; then
-                        status["$full_key"]="[X]"
-                        selected["$full_key"]="${packages[$full_key]}"
-                    else
-                        status["$full_key"]="[ ]"
-                        unset selected["$full_key"]
-                    fi
-                    break
-                fi
-            done
-        fi
-    done
-
-    local count=0
-    for key in "${!selected[@]}"; do
-        ((count++))
-    done
-
-    if [ $count -eq 0 ]; then
-        echo_info "Aucun paquet sélectionné."
-        return 0
-    fi
-
-    echo
-    echo -e "${YELLOW}Paquets sélectionnés:${NC}"
-
-    local pacman_pkgs=()
-    local aur_pkgs=()
-
-    for key in "${!selected[@]}"; do
-        local pkg="${selected[$key]}"
-        local src="${source[$key]}"
-        echo "  - $pkg (${src})"
-        if [ "$src" = "aur" ]; then
-            aur_pkgs+=("$pkg")
-        else
-            pacman_pkgs+=("$pkg")
-        fi
-    done
-    echo
-
-    echo -n "Installer ces paquets ? [O/n] "
-    read -n 1 -r REPLY
-    echo
-    if [[ ! $REPLY =~ ^[Oo]$ ]] && [[ ! -z $REPLY ]]; then
-        echo_info "Installation annulée."
-        return 0
-    fi
-
-    if [ ${#pacman_pkgs[@]} -gt 0 ]; then
-        echo_info "Installation depuis pacman: ${pacman_pkgs[*]}"
-        sudo pacman -S --needed "${pacman_pkgs[@]}"
-    fi
-
-    if [ ${#aur_pkgs[@]} -gt 0 ]; then
-        echo_info "Installation depuis AUR: ${aur_pkgs[*]}"
-        paru -S --needed "${aur_pkgs[@]}"
-    fi
-
-    echo_success "Installation terminée !"
-}
-
 function install_webapps() {
     if ! command -v chromium &> /dev/null; then
       pacman -S --needed chromium
@@ -746,13 +573,13 @@ if [[ $REPLY =~ ^[Oo]$ ]] || [[ -z $REPLY ]]; then
     config_zshShell
 fi
 
-echo
-echo -n "Installer des logiciels supplémentaires ? [o/N] "
-read -n 1 -r REPLY
-echo
-if [[ $REPLY =~ ^[Oo]$ ]]; then
-    install_extras
-fi
+#echo
+#echo -n "Installer des logiciels supplémentaires ? [o/N] "
+#read -n 1 -r REPLY
+#echo
+#if [[ $REPLY =~ ^[Oo]$ ]]; then
+#    install_extras
+#fi
 
 echo
 echo_success "Installation terminée !"
