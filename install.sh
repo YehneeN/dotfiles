@@ -660,6 +660,22 @@ function install_webapps() {
         "Teams"
     )
 
+    local apps_dir="${HOME}/.local/share/applications"
+    local source_dir="${CONFIG_DIR}/local/.local/share/applications"
+
+    if [ ! -d "$apps_dir" ]; then
+        mkdir -p "$apps_dir"
+    fi
+
+    for app in "${webApps[@]}"; do
+        if [ -f "${source_dir}/${app}.desktop" ]; then
+            cp -f "${source_dir}/${app}.desktop" "$apps_dir/"
+            echo_info "Copie de ${app}.desktop"
+        fi
+    done
+
+    update-desktop-database "$apps_dir"
+    echo_success "Base de donnees des applications mise a jour"
 }
 
 echo_info "Script d'installation - YehneeN\n"\
