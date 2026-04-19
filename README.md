@@ -16,7 +16,8 @@ Toujours en travaux.
 | **Zsh** | Shell |
 | **Yazi** | Gestionnaire de fichiers TUI |
 | **Thunar** | Gestionnaire de fichiers |
-| **SDDM** | Gestionnaire GUI de session |
+| **SDDM** | Gestionnaire GUI de session (Darkkal44 Theme) |
+| **Quickshell** | Qylock Darkkal44 Theme |
 
 ## Installation
 
