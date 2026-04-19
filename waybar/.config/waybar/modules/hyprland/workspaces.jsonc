@@ -16,6 +16,8 @@
       "Firefox": "  ",
       "Atera": "  ",
       "^(chrome-app.atera.com__-Default)": "  ",
+      "^(chrome-outlook.office.com__-Default)": "  ",
+      "^(chrome-teams.cloud.microsoft__v2-Default)": "  ",
       "Chromium": "  ",
       "Vesktop": "  ",
       "Steam": "  ",

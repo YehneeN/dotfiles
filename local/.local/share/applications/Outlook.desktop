@@ -1,18 +1,18 @@
 [Desktop Entry]
 Version=1.0
-Name=ATERA
-Comment=RMM Client App
-Exec=chromium --app="https://app.atera.com" --class=ATERA --name=ATERA
+Name=Outlook
+Comment=Outlook Client App
+Exec=chromium --app="https://outlook.office.com" --class=Outlook --name=Outlook
 Terminal=false
 X-MultipleArgs=false
 Type=Application
-Icon=/home/yehneen/.local/share/icons/apps/ATERA.png
+Icon=/home/yehneen/.local/share/icons/apps/microsoft-outlook.png
 Categories=GTK;WebApps;
 MimeType=text/html;text/xml;application/xhtml_xml;
-StartupWMClass=Atera
+StartupWMClass=Outlook
 StartupNotify=true
 X-WebApp-Browser=Chromium
-X-WebApp-URL=https://app.atera.com
+X-WebApp-URL=https://outlook.office.com
 X-WebApp-CustomParameters=
 X-WebApp-Navbar=false
 X-WebApp-PrivateWindow=false

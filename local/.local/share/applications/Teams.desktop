@@ -1,18 +1,18 @@
 [Desktop Entry]
 Version=1.0
-Name=ATERA
-Comment=RMM Client App
-Exec=chromium --app="https://app.atera.com" --class=ATERA --name=ATERA
+Name=Teams
+Comment=Teams Client App
+Exec=chromium --app="https://teams.cloud.microsoft/v2" --class=Teams --name=Teams
 Terminal=false
 X-MultipleArgs=false
 Type=Application
-Icon=/home/yehneen/.local/share/icons/apps/ATERA.png
+Icon=/home/yehneen/.local/share/icons/apps/microsoft-teams.png
 Categories=GTK;WebApps;
 MimeType=text/html;text/xml;application/xhtml_xml;
-StartupWMClass=Atera
+StartupWMClass=Teams
 StartupNotify=true
 X-WebApp-Browser=Chromium
-X-WebApp-URL=https://app.atera.com
+X-WebApp-URL=https://teams.cloud.microsoft/v2
 X-WebApp-CustomParameters=
 X-WebApp-Navbar=false
 X-WebApp-PrivateWindow=false

@@ -649,6 +649,19 @@ function install_extras() {
     echo_success "Installation terminée !"
 }
 
+function install_webapps() {
+    if ! command -v chromium &> /dev/null; then
+      pacman -S --needed chromium
+    fi
+
+    local webApps=(
+        "Atera"
+        "Outlook"
+        "Teams"
+    )
+
+}
+
 echo_info "Script d'installation - YehneeN\n"\
 "   Depuis la source ${CONFIG_SRC}\n"\
 "   Dans le dossier ${CONFIG_DIR}\n"
