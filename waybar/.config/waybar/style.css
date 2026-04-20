@@ -1,3 +1,5 @@
+@import "../../.cache/wal/colors-waybar.css";
+
 * {
     border: none;
     border-radius: 0;
@@ -9,7 +11,6 @@
 
 window#waybar {
     background-color: rgba(0, 0, 0, 0);
-    border-bottom: 0.5px solid #fffff0;
     background: rgba(21, 18, 27, 0.6);
     color: #cdd6f4;
     transition-property: background-color;
@@ -113,22 +114,22 @@ tooltip {
 
 #clock {
     border-radius: 18px 0 0 18px;
-    color: #fab387;
+    color: @foreground;
     margin-left: 5px;
 }
 
 #network {
     border-radius: 0px 0 0 0px;
-    color: #f9e2af;
+    color: @foreground;
 }
 
 #network.disabled {
-    color: #f9e2af;
+    color: @foreground;
 }
 
 #bluetooth {
     border-radius: 0 18px 18px 0px;
-    color: #89b4fa;
+    color: @foreground;
 }
 
 #window {
@@ -150,25 +151,13 @@ window#waybar.empty #window {
 }
 
 #custom-power_btn {
-    color: #9c8bfd;
+    color: @foreground;
     border-radius: 18px 0px 0px 18px;
 }
 
 #custom-lock_screen {
-    color: #9c8bfd;
+    color: @foreground;
     border-radius: 0px 0px 0px 0px;
-}
-
-#custom-updates.green {
-    color: #a6e3a1;
-}
-
-#custom-updates.yellow {
-    color: #e8db92;
-}
-
-#custom-updates.red {
-    color: #eba0ac;
 }
 
 /* RIGHT MODULES */
@@ -184,7 +173,7 @@ window#waybar.empty #window {
 }
 
 #temperature {
-    color: #8be9fd;
+    color: @foreground;
     border-radius: 18px 0px 0px 18px;
 }
 
@@ -195,7 +184,7 @@ window#waybar.empty #window {
 #battery {
     border-radius: 0px 0px 0px 0px;
     padding: 0px 0px 0px 7px;
-    color: #a6e3a1;
+    color: @foreground;
 }
 
 #battery.warning {
@@ -216,7 +205,7 @@ window#waybar.empty #window {
 }
 
 #power-profiles-daemon.balanced {
-    color: #8be9fd;
+    color: @foreground;
 }
 
 #power-profiles-daemon.performance {
@@ -225,17 +214,18 @@ window#waybar.empty #window {
 
 #backlight {
     border-radius: 0px 18px 18px 0px;
+    color: @foreground;
     margin-right: 5px;
 }
 
 #pulseaudio {
     border-radius: 18px 0 0 18px;
-    color: #89b4fa;
+    color: @foreground;
 }
 
 #pulseaudio.microphone {
     border-radius: 0 18px 18px 0;
-    color: #cba6f7;
+    color: @foreground;
     margin-right: 5px;
 }
 
