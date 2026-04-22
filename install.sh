@@ -72,6 +72,7 @@ function install_arch() {
     local packages=(
         "hyprland"
         "waybar"
+        "awww"
         "rofi"
         "swaync"
         "upower"
@@ -305,7 +306,7 @@ function config_sddm() {
     echo_info "Configuration SDDM...\n"
 
     local sddm_theme_source="$CONFIG_DIR/sddm/enfield"
-    local sddm_font_source="$CONFIG_DIR/sddm/enfield/fonts/Orbitron-VariableFont_wght.ttf"
+    local sddm_font_source="$CONFIG_DIR/sddm/enfield/font/Orbitron-VariableFont_wght.ttf"
     local sddm_conf_source="$CONFIG_DIR/sddm/sddm.conf"
 
     if [ ! -d "$sddm_theme_source" ]; then
