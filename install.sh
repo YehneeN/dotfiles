@@ -447,6 +447,41 @@ function install_webapps() {
     echo_success "Base de donnees des applications mise a jour"
 }
 
+function config_themes() {
+    echo_info "Configuration des thèmes...\n"
+
+    local kvantum_dir="$HOME/.config/Kvantum"
+
+    if [ ! -d "$kvantum_dir" ]; then
+        mkdir -p "$kvantum_dir"
+    fi
+
+    echo -n "Télécharger et installer le thème Kvantum '$KVANTUM_THEME' ? [O/n] "
+    read -n 1 -r REPLY
+    echo
+    if [[ $REPLY =~ ^[Oo]$ ]] || [[ -z $REPLY ]]; then
+        if [ -d "/tmp/Layan" ]; then
+            rm -rf /tmp/Layan
+        fi
+        echo_info "Téléchargement du thème Layan..."
+        git clone https://github.com/vinceliuice/Layan-kde.git /tmp/Layan
+        sudo cp -r /tmp/Layan/Kvantum/* "$kvantum_dir/"
+        rm -rf /tmp/Layan
+        kvantummanager --set LayanDark
+        echo_success "Thème Kvantum '$KVANTUM_THEME' installé"
+    fi
+
+    echo
+    echo -n "Installer le thème GTK '$GTK_THEME' ? [O/n] "
+    read -n 1 -r REPLY
+    echo
+    if [[ $REPLY =~ ^[Oo]$ ]] || [[ -z $REPLY ]]; then
+        stow gtktheme
+        echo_success "Thème GTK '$GTK_THEME' copié"
+        nwg-look
+    fi
+}
+
 echo_info "Script d'installation - YehneeN\n"\
 "   Depuis la source ${CONFIG_SRC}\n"\
 "   Dans le dossier ${CONFIG_DIR}\n"
@@ -506,43 +541,6 @@ echo
 if [[ $REPLY =~ ^[Oo]$ ]] || [[ -z $REPLY ]]; then
     config_zshShell
 fi
-
-function config_themes() {
-    echo_info "Configuration des thèmes...\n"
-
-    local kvantum_dir="$HOME/.config/Kvantum"
-
-    if [ ! -d "$kvantum_dir" ]; then
-        mkdir -p "$kvantum_dir"
-    fi
-
-    echo -n "Télécharger et installer le thème Kvantum '$KVANTUM_THEME' ? [O/n] "
-    read -n 1 -r REPLY
-    echo
-    if [[ $REPLY =~ ^[Oo]$ ]] || [[ -z $REPLY ]]; then
-        if [ -d "/tmp/Layan" ]; then
-            rm -rf /tmp/Layan
-        fi
-        echo_info "Téléchargement du thème Layan..."
-        git clone https://github.com/vinceliuice/Layan-kde.git /tmp/Layan
-        sudo cp -r /tmp/Layan/Kvantum/* "$kvantum_dir/"
-        rm -rf /tmp/Layan
-        kvantummanager --set LayanDark
-        echo_success "Thème Kvantum '$KVANTUM_THEME' installé"
-    fi
-
-    echo
-    echo -n "Installer le thème GTK '$GTK_THEME' ? [O/n] "
-    read -n 1 -r REPLY
-    echo
-    if [[ $REPLY =~ ^[Oo]$ ]] || [[ -z $REPLY ]]; then
-        stow ~/.dotfiles/gtktheme
-        echo_success "Thème GTK '$GTK_THEME' copié"
-        nwg-look
-    fi
-}
-
-
 
 echo
 echo -n "Configurer les thèmes (Kvantum + GTK) ? [O/n] "
