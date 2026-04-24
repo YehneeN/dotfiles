@@ -141,6 +141,7 @@ function install_arch() {
         "wine-mono"
         "wine-gecko"
         "winetricks"
+        "chromium"
     )
 
     echo_info "Installation des paquets...\n"
@@ -419,10 +420,6 @@ function stowThat() {
 }
 
 function install_webapps() {
-    if ! pacman -Q "chromium" &> /dev/null; then
-        sudo pacman -S --needed chromium
-    fi
-
     local apps_dir="${HOME}/.local/share/applications"
 
     update-desktop-database "$apps_dir"
@@ -532,13 +529,7 @@ if [[ $REPLY =~ ^[Oo]$ ]] || [[ -z $REPLY ]]; then
     config_themes
 fi
 
-echo
-echo -n "Installer les webApps ? [O/n] "
-read -n 1 -r REPLY
-echo
-if [[ $REPLY =~ ^[Oo]$ ]] || [[ -z $REPLY ]]; then
-    install_webapps
-fi
+install_webapps
 
 echo
 echo_success "Installation terminée !"
