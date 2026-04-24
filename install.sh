@@ -551,4 +551,12 @@ if [[ $REPLY =~ ^[Oo]$ ]] || [[ -z $REPLY ]]; then
 fi
 
 echo
+echo -n "Installer les webApps ? [O/n] "
+read -n 1 -r REPLY
+echo
+if [[ $REPLY =~ ^[Oo]$ ]] || [[ -z $REPLY ]]; then
+    install_webapps
+fi
+
+echo
 echo_success "Installation terminée !"
