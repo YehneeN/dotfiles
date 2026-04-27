@@ -72,6 +72,7 @@ function install_arch() {
     local packages=(
         "hyprland"
         "waybar"
+        "waypaper"
         "awww"
         "rofi"
         "swaync"
@@ -349,6 +350,7 @@ function stowThat() {
         "vesktop"
         "local"
         "yazi"
+        "waypaper"
     )
 
     declare -A stow_targets=(
@@ -365,6 +367,10 @@ function stowThat() {
         ["waybar"]="$HOME/.config/waybar"
         ["wlogout"]="$HOME/.config/wlogout"
         ["zshrc"]="$HOME/.zshrc"
+        ["vesktop"]="$HOME/.config/vesktop"
+        ["local"]="$HOME/.local"
+        ["yazi"]="$HOME/.config/yazi"
+        ["waypaper"]="$HOME/.config/waypaper"
     )
 
     if ! command -v stow &> /dev/null; then
