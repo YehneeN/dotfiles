@@ -14,14 +14,16 @@
     "~/.config/waybar/modules/hyprland/*.jsonc",
   ],
 
-  "modules-left": ["clock", "network", "bluetooth", "hyprland/window"],
-  "modules-center": [
-    "custom/rofi",
-    "hyprland/workspaces",
+  "modules-left": ["custom/rofi", "hyprland/window"],
+  "modules-center": ["hyprland/workspaces"],
+  "modules-right": [
+    "clock",
+    "network",
+    "group/hardware",
+    "group/audio",
+    "tray",
     "group/exit",
-    "custom/updates",
   ],
-  "modules-right": ["group/hardware", "group/audio", "tray"],
 
   // Group Hardware
   "group/hardware": {
@@ -32,7 +34,7 @@
   // Group IO Audio
   "group/audio": {
     "orientation": "horizontal",
-    "modules": ["pulseaudio", "pulseaudio#microphone"],
+    "modules": ["pulseaudio", "pulseaudio#microphone", "bluetooth"],
   },
 
   // Group Wlogout \ Lock QS

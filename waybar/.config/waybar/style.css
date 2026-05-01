@@ -11,7 +11,7 @@
 
 window#waybar {
     background-color: rgba(0, 0, 0, 0);
-    background: rgba(21, 18, 27, 0.6);
+    background: @color9;
     color: #cdd6f4;
     transition-property: background-color;
     transition-duration: 0.5s;
@@ -23,45 +23,46 @@ window#waybar.hidden {
 
 tooltip {
     background: rgba(8, 7, 10, 0.8);
-    border-radius: 18px;
+    border-radius: 10px;
     border-width: 2px;
     border-style: solid;
     border-color: #11111b;
 }
 
 #workspaces {
-    background: rgba(8, 7, 10, 0.6);
+    background: transparent;
     margin: 5px 5px 5px 5px;
     padding: 6px 5px;
-    border-radius: 18px;
+    border-radius: 10px;
     margin-top: 7px;
     margin-bottom: 7px;
     /* margin-left: 5px;
-    margin-right: 5px; */
-    border: 0.5px solid #032412;
+    margin-right: 5px;
+    border: 0.5px solid #032412;*/
 }
 
 #workspaces button {
     padding: 0px 5px;
     margin: 0px 3px;
-    border-radius: 16px;
-    color: #cdd6f4;
-    background-color: #2f354a;
+    border-radius: 8px;
+    color: @foreground;
+    background-color: @background;
+    opacity: 0.4;
     transition: all 0.3s ease-in-out;
 }
 
 #workspaces button.empty {
-    opacity: 0.4;
+    opacity: 0.1;
 }
 
 #workspaces button.active {
-    color: @background;
-    background-color: @foreground;
-    border-radius: 16px;
+    color: @foreground;
+    background-color: @background;
+    border-radius: 8px;
     min-width: 50px;
     background-size: 400% 400%;
     transition: all 0.3s ease-in-out;
-    /*opacity: 1.0;*/
+    opacity: 0.7;
 }
 
 #workspaces button.urgent {
@@ -101,21 +102,22 @@ tooltip {
 #pulseaudio,
 #tray,
 #custom-swaync {
-    background-color: #2f354a;
+    background-color: transparent;
     margin: 0 0 0 0;
     padding: 0px 7px 0px 7px;
-    border-radius: 18px;
+    border-radius: 10px;
     margin-top: 10px;
     margin-bottom: 10px;
     border: none;
+    opacity: 0.7;
 }
 
 /* LEFT MODULES */
 
 #clock {
-    border-radius: 18px 0 0 18px;
+    border-radius: 5px 0px 0px 5px;
     color: @foreground;
-    margin-left: 5px;
+    /*margin-left: 5px;*/
 }
 
 #network {
@@ -128,16 +130,15 @@ tooltip {
 }
 
 #bluetooth {
-    border-radius: 0 18px 18px 0px;
+    border-radius: 0 0px 0px 0px;
     color: @foreground;
 }
 
 #window {
-    background: @foreground;
-    color: @background;
-    border-radius: 18px;
-    margin-left: 20px;
-    margin-right: 20px;
+    background: transparent;
+    color: @foreground;
+    border-radius: 5px;
+    margin-left: 10px;
 }
 
 window#waybar.empty #window {
@@ -147,17 +148,21 @@ window#waybar.empty #window {
 /* CENTER MODULES */
 
 #custom-rofi {
-    opacity: 0.6;
+    color: @foreground;
+    border-radius: 5px;
+    opacity: 0.7;
+    margin-left: 10px;
 }
 
 #custom-power_btn {
     color: @foreground;
-    border-radius: 18px 0px 0px 18px;
+    border-radius: 0px 0px 0px 0px;
 }
 
 #custom-lock_screen {
     color: @foreground;
     border-radius: 0px 0px 0px 0px;
+    margin-right: 10px;
 }
 
 /* RIGHT MODULES */
@@ -174,7 +179,7 @@ window#waybar.empty #window {
 
 #temperature {
     color: @foreground;
-    border-radius: 18px 0px 0px 18px;
+    border-radius: 0px 0px 0px 0px;
 }
 
 #temperature.critical {
@@ -188,11 +193,11 @@ window#waybar.empty #window {
 }
 
 #battery.warning {
-    color: #e8db92;
+    color: #ffff00;
 }
 
 #battery.critical {
-    color: #eba0ac;
+    color: #ff0000;
 }
 
 #power-profiles-daemon {
@@ -201,7 +206,7 @@ window#waybar.empty #window {
 }
 
 #power-profiles-daemon.power-saver {
-    color: #a6e3a1;
+    color: @foreground;
 }
 
 #power-profiles-daemon.balanced {
@@ -209,31 +214,32 @@ window#waybar.empty #window {
 }
 
 #power-profiles-daemon.performance {
-    color: #e8db92;
+    color: @foreground;
 }
 
 #backlight {
-    border-radius: 0px 18px 18px 0px;
+    border-radius: 0px 0px 0px 0px;
     color: @foreground;
-    margin-right: 5px;
+    /*margin-right: 5px;*/
 }
 
 #pulseaudio {
-    border-radius: 18px 0 0 18px;
+    border-radius: 0px 0px 0px 0px;
     color: @foreground;
 }
 
 #pulseaudio.microphone {
-    border-radius: 0 18px 18px 0;
+    border-radius: 0px 0px 0px 0px;
     color: @foreground;
-    margin-right: 5px;
+    /* margin-right: 5px;*/
 }
 
 #tray {
-    border-radius: 18px 18px 18px 18px;
+    border-radius: 0px 0px 0px 0px;
 }
 
 #custom-updates {
-    border-radius: 0px 18px 18px 0px;
+    border-radius: 0px 5px 5px 0px;
     padding: 0px 5px 0px 5px;
+    margin-right: 10px;
 }
