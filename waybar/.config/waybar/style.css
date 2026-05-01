@@ -55,8 +55,8 @@ tooltip {
 }
 
 #workspaces button.active {
-    color: #2f354a;
-    background-color: #cdd6f4;
+    color: @background;
+    background-color: @foreground;
     border-radius: 16px;
     min-width: 50px;
     background-size: 400% 400%;
@@ -133,8 +133,8 @@ tooltip {
 }
 
 #window {
-    background: #cdd6f4;
-    color: #1e1e2e;
+    background: @foreground;
+    color: @background;
     border-radius: 18px;
     margin-left: 20px;
     margin-right: 20px;
