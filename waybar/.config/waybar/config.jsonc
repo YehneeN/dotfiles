@@ -4,8 +4,10 @@
   "position": "top",
   "mod": "dock",
   "exclusive": true,
+  "width": 1900,
   "passthrough": false,
   "gtk-layer-shell": true,
+  "margin-top": 5,
 
   "include": [
     "~/.config/waybar/modules/*.jsonc",

@@ -11,10 +11,12 @@
 
 window#waybar {
     background-color: rgba(0, 0, 0, 0);
-    background: transparent;
+    background: rgba(35, 35, 35, 0.8);
     color: #cdd6f4;
     transition-property: background-color;
     transition-duration: 0.5s;
+    border-radius: 10px;
+    margin-top: 10px;
 }
 
 window#waybar.hidden {
@@ -45,7 +47,7 @@ tooltip {
     padding: 0px 5px;
     margin: 0px 3px;
     border-radius: 8px;
-    color: @foreground;
+    color: @color6;
     background-color: @background;
     opacity: 0.4;
     transition: all 0.3s ease-in-out;
@@ -56,13 +58,13 @@ tooltip {
 }
 
 #workspaces button.active {
-    color: @foreground;
+    color: @color6;
     background-color: @background;
     border-radius: 8px;
     min-width: 50px;
     background-size: 400% 400%;
     transition: all 0.3s ease-in-out;
-    opacity: 0.7;
+    opacity: 0.9;
 }
 
 #workspaces button.urgent {
@@ -109,34 +111,34 @@ tooltip {
     margin-top: 10px;
     margin-bottom: 10px;
     border: none;
-    opacity: 0.7;
+    opacity: 0.9;
 }
 
 /* LEFT MODULES */
 
 #clock {
     border-radius: 5px 0px 0px 5px;
-    color: @foreground;
+    color: @color6;
     /*margin-left: 5px;*/
 }
 
 #network {
     border-radius: 0px 0 0 0px;
-    color: @foreground;
+    color: @color6;
 }
 
 #network.disabled {
-    color: @foreground;
+    color: @color6;
 }
 
 #bluetooth {
     border-radius: 0 0px 0px 0px;
-    color: @foreground;
+    color: @color6;
 }
 
 #window {
     background: transparent;
-    color: @foreground;
+    color: @color6;
     border-radius: 5px;
     margin-left: 10px;
 }
@@ -148,19 +150,19 @@ window#waybar.empty #window {
 /* CENTER MODULES */
 
 #custom-rofi {
-    color: @foreground;
+    color: @color6;
     border-radius: 5px;
-    opacity: 0.7;
+    opacity: 0.9;
     margin-left: 10px;
 }
 
 #custom-power_btn {
-    color: @foreground;
+    color: @color6;
     border-radius: 0px 0px 0px 0px;
 }
 
 #custom-lock_screen {
-    color: @foreground;
+    color: @color6;
     border-radius: 0px 0px 0px 0px;
     margin-right: 10px;
 }
@@ -178,7 +180,7 @@ window#waybar.empty #window {
 }
 
 #temperature {
-    color: @foreground;
+    color: @color6;
     border-radius: 0px 0px 0px 0px;
 }
 
@@ -189,7 +191,7 @@ window#waybar.empty #window {
 #battery {
     border-radius: 0px 0px 0px 0px;
     padding: 0px 0px 0px 7px;
-    color: @foreground;
+    color: @color6;
 }
 
 #battery.warning {
@@ -206,31 +208,31 @@ window#waybar.empty #window {
 }
 
 #power-profiles-daemon.power-saver {
-    color: @foreground;
+    color: @color6;
 }
 
 #power-profiles-daemon.balanced {
-    color: @foreground;
+    color: @color6;
 }
 
 #power-profiles-daemon.performance {
-    color: @foreground;
+    color: @color6;
 }
 
 #backlight {
     border-radius: 0px 0px 0px 0px;
-    color: @foreground;
+    color: @color6;
     /*margin-right: 5px;*/
 }
 
 #pulseaudio {
     border-radius: 0px 0px 0px 0px;
-    color: @foreground;
+    color: @color6;
 }
 
 #pulseaudio.microphone {
     border-radius: 0px 0px 0px 0px;
-    color: @foreground;
+    color: @color6;
     /* margin-right: 5px;*/
 }
 
